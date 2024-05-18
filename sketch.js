@@ -1,5 +1,5 @@
 let stars = [];
-let numStars = 200;
+let numStars = 1000;
 let speed = 4;
 let warpSpeed = false;
 let img;
