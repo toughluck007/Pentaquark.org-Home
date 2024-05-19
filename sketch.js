@@ -3,6 +3,7 @@ let numStars = 1000;
 let speed = 4;
 let warpSpeed = false;
 let img;
+let imgWidth, imgHeight;
 
 function preload() {
   // Load the image using the p5.js loadImage function
@@ -16,6 +17,9 @@ function setup() {
   for (let i = 0; i < numStars; i++) {
     stars.push(new Star());
   }
+
+  // Calculate initial image dimensions
+  calculateImageDimensions();
 }
 
 function draw() {
@@ -28,10 +32,10 @@ function draw() {
     star.show();
   }
 
-  // Draw the image at the center of the canvas
+  // Draw the resized image at the center of the canvas
   push();
-  translate(-img.width / 2, -img.height / 2); // Center the image
-  image(img, 0, 0);
+  translate(-imgWidth / 2, -imgHeight / 2); // Center the image
+  image(img, 0, 0, imgWidth, imgHeight);
   pop();
 }
 
@@ -41,6 +45,27 @@ function mousePressed() {
 
 function mouseReleased() {
   warpSpeed = false;
+}
+
+function windowResized() {
+  resizeCanvas(windowWidth, windowHeight);
+  calculateImageDimensions();
+}
+
+function calculateImageDimensions() {
+  // Calculate the aspect ratio of the image
+  let imgAspect = img.width / img.height;
+  let canvasAspect = windowWidth / windowHeight;
+
+  if (canvasAspect > imgAspect) {
+    // If canvas is wider than the image, fit image height to canvas height
+    imgHeight = windowHeight;
+    imgWidth = imgAspect * imgHeight;
+  } else {
+    // If canvas is taller than the image, fit image width to canvas width
+    imgWidth = windowWidth;
+    imgHeight = imgWidth / imgAspect;
+  }
 }
 
 class Star {
