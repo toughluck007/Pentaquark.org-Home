@@ -20,6 +20,12 @@ function setup() {
 
   // Calculate initial image dimensions
   calculateImageDimensions();
+
+  // Prevent default behavior on touch events
+  let canvasElement = document.getElementsByTagName('canvas')[0];
+  canvasElement.addEventListener('touchstart', preventDefault);
+  canvasElement.addEventListener('touchmove', preventDefault);
+  canvasElement.addEventListener('touchend', preventDefault);
 }
 
 function draw() {
@@ -66,6 +72,10 @@ function calculateImageDimensions() {
     imgWidth = windowWidth;
     imgHeight = imgWidth / imgAspect;
   }
+}
+
+function preventDefault(e) {
+  e.preventDefault();
 }
 
 class Star {
